@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 const OnboardingScreen = () => {
   return (
@@ -8,5 +8,7 @@ const OnboardingScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({});
 
 export default OnboardingScreen;
