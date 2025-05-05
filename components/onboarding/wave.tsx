@@ -1,12 +1,11 @@
 import React from "react";
 import { Text, View } from "react-native";
-
+export enum Side {
+  LEFT,
+  RIGHT,
+  NONE,
+}
 const Wave = () => {
-  export enum Side {
-    LEFT,
-    RIGHT,
-    NONE,
-  }
   return (
     <View>
       <Text>Wave</Text>
