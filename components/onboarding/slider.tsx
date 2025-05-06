@@ -3,15 +3,23 @@ import {
   LEFT_SNAP_POINTS,
   MARGIN_WIDTH,
   MIN_LEDGE,
+  NEXT,
   PREV,
+  RIGHT_SNAP_POINTS,
+  Side,
   WIDTH,
 } from "@/configs/constants";
-import React, { JSX } from "react";
-import { Text, View } from "react-native";
-import { Gesture } from "react-native-gesture-handler";
-import { useSharedValue } from "react-native-reanimated";
+import React, { JSX, useEffect } from "react";
+import { Platform, StyleSheet, View } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { snapPoint, useVector } from "react-native-redash";
-import { Side } from "./wave";
+
 interface SliderProps {
   index: number;
   setIndex: (value: number) => void;
@@ -58,12 +66,70 @@ const Slider = ({
       if (activeSide.value === Side.LEFT) {
         const dest = snapPoint(x, velocityX, LEFT_SNAP_POINTS);
         isTransitionLeft.value = dest === PREV;
+        left.x.value = withSpring(
+          dest,
+          {
+            velocity: velocityX,
+            overshootClamping: isTransitionLeft.value ? true : false,
+            restSpeedThreshold: isTransitionLeft.value ? 100 : 0.01,
+            restDisplacementThreshold: isTransitionLeft.value ? 100 : 0.01,
+          },
+          () => {
+            if (isTransitionLeft.value) {
+              runOnJS(setIndex)(index - 1);
+            } else {
+              zIndex.value = 0;
+              activeSide.value = Side.NONE;
+            }
+          }
+        );
+        left.y.value = withSpring(HEIGHT / 2, { velocity: velocityY });
+      } else if (activeSide.value === Side.RIGHT) {
+        const dest = snapPoint(x, velocityX, RIGHT_SNAP_POINTS);
+        isTransitionRight.value = dest === NEXT;
+        right.x.value = withSpring(
+          WIDTH - dest,
+          {
+            velocity: velocityX,
+            overshootClamping: isTransitionRight.value ? true : false,
+            restSpeedThreshold: isTransitionRight.value ? 100 : 0.01,
+            restDisplacementThreshold: isTransitionRight.value ? 100 : 0.01,
+          },
+          () => {
+            if (isTransitionRight.value) {
+              runOnJS(setIndex)(index + 1);
+            } else {
+              activeSide.value = Side.NONE;
+            }
+          }
+        );
+        right.y.value = withSpring(HEIGHT / 2, { velocity: velocityY });
       }
     });
+
+  const leftStyle = useAnimatedStyle(() => ({
+    zIndex: zIndex.value,
+  }));
+
+  useEffect(() => {
+    if (Platform.OS === "ios") {
+      right.x.value = withSpring(WIDTH * 0.167);
+    } else {
+      right.x.value = withSpring(WIDTH * 0.185);
+    }
+  }, [left, right]);
   return (
-    <View>
-      <Text>Slider</Text>
-    </View>
+    <GestureDetector gesture={panGesture}>
+      <Animated.View style={StyleSheet.absoluteFill}>
+        {current}
+        {prev && (
+          <Animated.View
+            style={[StyleSheet.absoluteFill, leftStyle]}
+          ></Animated.View>
+        )}
+        {next && <View style={StyleSheet.absoluteFill}></View>}
+      </Animated.View>
+    </GestureDetector>
   );
 };
 

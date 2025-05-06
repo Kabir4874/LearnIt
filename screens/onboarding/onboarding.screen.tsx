@@ -20,7 +20,14 @@ const OnboardingScreen = () => {
         next={
           next && <Slide slide={next} totalSlides={onBoardingSlides.length} />
         }
-      ></Slider>
+      >
+        <Slide
+          slide={onBoardingSlides[index]}
+          index={index}
+          setIndex={setIndex}
+          totalSlides={onBoardingSlides.length}
+        />
+      </Slider>
     </GestureHandlerRootView>
   );
 };
