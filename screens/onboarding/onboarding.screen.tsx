@@ -1,7 +1,7 @@
 import Slide from "@/components/onboarding/slide";
 import Slider from "@/components/onboarding/slider";
 import { onBoardingSlides } from "@/configs/constants";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 const OnboardingScreen = () => {

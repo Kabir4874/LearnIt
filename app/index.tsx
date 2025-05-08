@@ -1,7 +1,7 @@
 import { Redirect } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import React, { useEffect, useState } from "react";
-const index = () => {
+const Index = () => {
   const [loggedInUser, setLoggedInUser] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -23,4 +23,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
