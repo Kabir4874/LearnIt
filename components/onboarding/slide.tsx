@@ -155,6 +155,7 @@ const Slide = ({ slide, index, setIndex, totalSlides }: SlideProps) => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              onPress={(e) => e.stopPropagation()}
             ></Pressable>
           </BlurView>
         </Pressable>
