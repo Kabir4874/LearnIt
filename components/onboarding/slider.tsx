@@ -19,6 +19,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { snapPoint, useVector } from "react-native-redash";
+import Wave from "./wave";
 
 interface SliderProps {
   index: number;
@@ -123,11 +124,27 @@ const Slider = ({
       <Animated.View style={StyleSheet.absoluteFill}>
         {current}
         {prev && (
-          <Animated.View
-            style={[StyleSheet.absoluteFill, leftStyle]}
-          ></Animated.View>
+          <Animated.View style={[StyleSheet.absoluteFill, leftStyle]}>
+            <Wave
+              side={Side.LEFT}
+              position={left}
+              isTransitioning={isTransitionLeft}
+            >
+              {prev}
+            </Wave>
+          </Animated.View>
         )}
-        {next && <View style={StyleSheet.absoluteFill}></View>}
+        {next && (
+          <View style={StyleSheet.absoluteFill}>
+            <Wave
+              side={Side.RIGHT}
+              position={right}
+              isTransitioning={isTransitionRight}
+            >
+              {next}
+            </Wave>
+          </View>
+        )}
       </Animated.View>
     </GestureDetector>
   );

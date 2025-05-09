@@ -5,9 +5,12 @@ import {
   windowHeight,
   windowWidth,
 } from "@/themes/app.constant";
+import { Ionicons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import {
+  Modal,
   Platform,
   Pressable,
   StyleSheet,
@@ -119,10 +122,43 @@ const Slide = ({ slide, index, setIndex, totalSlides }: SlideProps) => {
         </LinearGradient>
       )}
       {index < totalSlides - 1 && (
-        <TouchableOpacity style={styles.arrowButton}>
-          <Ionicons name="chevron-forward-outline" size={} color="black" />
+        <TouchableOpacity
+          style={styles.arrowButton}
+          onPress={() => handlePress(index, setIndex)}
+        >
+          <Ionicons
+            name="chevron-forward-outline"
+            size={scale(18)}
+            color="black"
+          />
         </TouchableOpacity>
       )}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <Pressable style={{ flex: 1 }} onPress={() => setModalVisible(false)}>
+          <BlurView
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <Pressable
+              style={{
+                width: windowWidth(420),
+                height: windowHeight(250),
+                marginHorizontal: windowWidth(50),
+                backgroundColor: "#fff",
+                borderRadius: 30,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            ></Pressable>
+          </BlurView>
+        </Pressable>
+      </Modal>
     </>
   );
 };
