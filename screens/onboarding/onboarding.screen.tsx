@@ -15,10 +15,24 @@ const OnboardingScreen = () => {
         index={index}
         setIndex={setIndex}
         prev={
-          prev && <Slide slide={prev} totalSlides={onBoardingSlides.length} />
+          prev && (
+            <Slide
+              slide={prev}
+              totalSlides={onBoardingSlides.length}
+              setIndex={setIndex}
+              index={index}
+            />
+          )
         }
         next={
-          next && <Slide slide={next} totalSlides={onBoardingSlides.length} />
+          next && (
+            <Slide
+              slide={next}
+              totalSlides={onBoardingSlides.length}
+              setIndex={setIndex}
+              index={index}
+            />
+          )
         }
       >
         <Slide
