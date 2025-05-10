@@ -6,7 +6,6 @@ import {
   windowWidth,
 } from "@/themes/app.constant";
 import { Ionicons } from "@expo/vector-icons";
-import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import {
@@ -20,6 +19,7 @@ import {
 } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { Defs, RadialGradient, Rect, Stop, Svg } from "react-native-svg";
+import AuthModal from "../auth/auth.modal";
 interface SlideProps {
   slide: onBoardingSlidesTypes;
   index: number;
@@ -142,22 +142,7 @@ const Slide = ({ slide, index, setIndex, totalSlides }: SlideProps) => {
         }}
       >
         <Pressable style={{ flex: 1 }} onPress={() => setModalVisible(false)}>
-          <BlurView
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Pressable
-              style={{
-                width: windowWidth(420),
-                height: windowHeight(250),
-                marginHorizontal: windowWidth(50),
-                backgroundColor: "#fff",
-                borderRadius: 30,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              onPress={(e) => e.stopPropagation()}
-            ></Pressable>
-          </BlurView>
+          <AuthModal />
         </Pressable>
       </Modal>
     </>
