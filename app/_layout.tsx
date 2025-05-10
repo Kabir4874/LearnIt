@@ -11,7 +11,7 @@ import { SplashScreen, Stack } from "expo-router";
 import React from "react";
 
 SplashScreen.preventAutoHideAsync();
-const Layout = () => {
+const _layout = () => {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     Poppins_600SemiBold,
@@ -30,4 +30,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default _layout;
