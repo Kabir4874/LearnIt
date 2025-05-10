@@ -1,8 +1,25 @@
 import { ThemeProvider } from "@/context/theme.context";
-import { Stack } from "expo-router";
+import {
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  useFonts,
+} from "@expo-google-fonts/poppins";
+import { SplashScreen, Stack } from "expo-router";
 import React from "react";
 
-const _layout = () => {
+SplashScreen.preventAutoHideAsync();
+const Layout = () => {
+  const [loaded] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    Poppins_600SemiBold,
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_700Bold,
+    Poppins_500Medium,
+  });
   return (
     <ThemeProvider>
       <Stack screenOptions={{ headerShown: false }}>
@@ -13,4 +30,4 @@ const _layout = () => {
   );
 };
 
-export default _layout;
+export default Layout;
